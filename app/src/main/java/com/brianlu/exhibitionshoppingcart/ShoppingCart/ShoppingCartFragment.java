@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -30,6 +29,7 @@ public class ShoppingCartFragment extends Fragment
     private RecyclerView recyclerView;
     private TwinklingRefreshLayout refreshLayout;
     private Button scanButton;
+    private Button checkoutButton;
 
     private ShoppingCartPresenter presenter;
 
@@ -39,7 +39,9 @@ public class ShoppingCartFragment extends Fragment
 
         View view = inflater.inflate(R.layout.fragment_shopping_cart, container, false);
         scanButton = view.findViewById(R.id.scan_button);
+        checkoutButton = view.findViewById(R.id.checkout_button);
         scanButton.setOnClickListener(this);
+        checkoutButton.setOnClickListener(this);
 
         refreshLayout = view.findViewById(R.id.refreshLayout);
         refreshLayout.setAutoLoadMore(true);
@@ -114,6 +116,11 @@ public class ShoppingCartFragment extends Fragment
     @Override
     public void setScanButtonText(String text) {
         scanButton.setText(text);
+    }
+
+    @Override
+    public void setCheckoutButtonText(String text) {
+        checkoutButton.setText(text);
     }
 
     @Override

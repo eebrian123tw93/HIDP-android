@@ -20,6 +20,7 @@ import retrofit2.Response;
 
 interface ShoppingCartView extends BaseView {
     void setScanButtonText(String text);
+    void setCheckoutButtonText(String text);
     void onFinishRefreshOrLoad();
     void onSetArticleListRecyclerAdapter(RecyclerView.Adapter adapter);
 }
@@ -30,6 +31,7 @@ class ShoppingCartPresenter extends BasePresenter {
     ShoppingCartPresenter(ShoppingCartView view) {
         this.view = view;
         view.setScanButtonText("掃描商品");
+        view.setCheckoutButtonText("總計 0");
     }
 
     @SuppressLint("CheckResult")
@@ -41,7 +43,7 @@ class ShoppingCartPresenter extends BasePresenter {
         user.setUserId("test");
         user.setPassword("test");
         HidpApiService.getInstance().addItemToCart(user, product, false)
-                .filter(response -> response.isSuccessful())
+                .filter(Response::isSuccessful)
                 .map(Response::body)
                 .map(ResponseBody::string)
                 .subscribe(new Observer<String>() {
