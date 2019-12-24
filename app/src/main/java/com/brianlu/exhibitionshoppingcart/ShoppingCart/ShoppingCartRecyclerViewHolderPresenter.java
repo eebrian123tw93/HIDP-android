@@ -1,8 +1,5 @@
 package com.brianlu.exhibitionshoppingcart.ShoppingCart;
 
-import android.content.Intent;
-import android.view.View;
-
 import com.brianlu.exhibitionshoppingcart.Base.BasePresenter;
 import com.brianlu.exhibitionshoppingcart.model.CartItem;
 

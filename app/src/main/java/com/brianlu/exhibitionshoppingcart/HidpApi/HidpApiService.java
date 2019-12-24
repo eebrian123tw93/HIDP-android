@@ -43,7 +43,6 @@ public class HidpApiService {
     }
 
 
-
     public void login(@NonNull Observer observer, @NonNull User user, boolean isObserveOnIO) {
         String authKey = user.authKey();
         hidpApi
@@ -78,6 +77,15 @@ public class HidpApiService {
         String authKey = user.authKey();
         String productId = product.getProductId();
         return hidpApi.addItemToCart(authKey, productId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(isObserveOnIO ? Schedulers.io() : AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io());
+    }
+
+    public Observable<Response<ResponseBody>> getProductInfo(@NonNull User user, @NonNull Product product, boolean isObserveOnIO) {
+        String authKey = user.authKey();
+        String productId = product.getProductId();
+        return hidpApi.getProductInfo(authKey, productId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(isObserveOnIO ? Schedulers.io() : AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io());

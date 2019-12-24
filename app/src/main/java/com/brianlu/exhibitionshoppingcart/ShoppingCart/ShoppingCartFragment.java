@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.brianlu.exhibitionshoppingcart.ProductDetail.ProductDetailActivity;
 import com.brianlu.exhibitionshoppingcart.R;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -66,8 +67,6 @@ public class ShoppingCartFragment extends Fragment
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
 
-//        recyclerView.setAdapter(adapter);
-
         presenter = new ShoppingCartPresenter(this);
         return view;
     }
@@ -93,11 +92,13 @@ public class ShoppingCartFragment extends Fragment
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
 
-        Optional<IntentResult> scanningResult = Optional.of(IntentIntegrator.parseActivityResult(requestCode, resultCode, intent));
+        Optional<IntentResult> scanningResult = Optional.ofNullable(IntentIntegrator.parseActivityResult(requestCode, resultCode, intent));
         scanningResult.ifPresent(result -> {
-            String scanContent = result.getContents();
-            presenter.aaa(scanContent);
-            Log.i("ShoppingCartFragment", scanContent);
+            String productId = result.getContents();
+            Intent intentToDetail = new Intent(getActivity(), ProductDetailActivity.class);
+            intentToDetail.putExtra("productId", productId);
+            startActivity(intentToDetail);
+            Log.i("ShoppingCartFragment", productId);
         });
 
     }
