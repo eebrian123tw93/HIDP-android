@@ -23,6 +23,12 @@ public class ShoppingCartActivity extends AppCompatActivity {
                 .commit();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fragment.onResume();
+    }
+
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
         fragment.onActivityResult(requestCode, resultCode, intent);

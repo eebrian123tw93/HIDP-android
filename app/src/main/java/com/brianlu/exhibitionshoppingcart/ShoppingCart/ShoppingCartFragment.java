@@ -71,6 +71,11 @@ public class ShoppingCartFragment extends Fragment
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.getCartItems();
+    }
 
     @Override
     public void onClick(View view) {
