@@ -8,16 +8,16 @@ import java.util.List;
 
 public class ShoppingCartRecyclerViewHolderPresenter extends BasePresenter {
 
-    private List<CartItem> articles;
+    private List<CartItem> cartItems;
 
     public ShoppingCartRecyclerViewHolderPresenter() {
-        articles = new ArrayList<>();
+        cartItems = new ArrayList<>();
     }
 
     public void bindData(ShoppingCartRecyclerViewAdapter.ViewHolder viewHolder, int position) {
         if (viewHolder instanceof ShoppingCartRecyclerViewHolderView) {
             ShoppingCartRecyclerViewHolderView viewHolderView = viewHolder;
-            final CartItem article = articles.get(position);
+            final CartItem cartItem = cartItems.get(position);
 
         }
 
@@ -25,16 +25,16 @@ public class ShoppingCartRecyclerViewHolderPresenter extends BasePresenter {
     }
 
     public int getItemCount() {
-        return articles.size();
+        return cartItems.size();
     }
 
     public void addArticles(List<CartItem> cartItems) {
-        this.articles.addAll(cartItems);
+        cartItems.addAll(cartItems);
 
     }
 
     public void clear() {
-        this.articles.clear();
+        cartItems.clear();
 
     }
 

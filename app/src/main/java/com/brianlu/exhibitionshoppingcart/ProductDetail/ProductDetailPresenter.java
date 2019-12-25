@@ -58,7 +58,8 @@ class ProductDetailPresenter extends BasePresenter {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        e.printStackTrace();
+                        view.onSetMessage(e.getMessage(), FancyToast.ERROR);
                     }
 
                     @Override

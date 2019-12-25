@@ -2,6 +2,7 @@ package com.brianlu.exhibitionshoppingcart.ProductDetail;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -42,6 +43,7 @@ public class ProductDetailActivity extends AppCompatActivity implements ProductD
         Intent intent = getIntent();
         Optional<String> productIdOptional = Optional.ofNullable(intent.getStringExtra("productId"));
         productIdOptional.ifPresent(productId -> {
+            Log.i("TAG", productId);
             present.getProductInfo(productId);
         });
 

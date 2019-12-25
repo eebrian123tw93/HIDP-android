@@ -14,14 +14,16 @@ import com.shashank.sony.fancytoastlib.FancyToast;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Function;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 
 interface ShoppingCartView extends BaseView {
     void setScanButtonText(String text);
+
     void setCheckoutButtonText(String text);
+
     void onFinishRefreshOrLoad();
+
     void onSetArticleListRecyclerAdapter(RecyclerView.Adapter adapter);
 }
 
@@ -54,7 +56,7 @@ class ShoppingCartPresenter extends BasePresenter {
 
                     @Override
                     public void onNext(String string) {
-                        if (string.equals("success") ) {
+                        if (string.equals("success")) {
                             view.onSetMessage("商品加入成功", FancyToast.INFO);
                         } else {
                             Log.i("TAG", string);
@@ -72,5 +74,35 @@ class ShoppingCartPresenter extends BasePresenter {
 
                     }
                 });
+    }
+
+    void getCartItems() {
+        User user = new User();
+        user.setUserId("test");
+        user.setPassword("test");
+        HidpApiService.getInstance().getCartItems(user, false)
+                .filter(Response::isSuccessful)
+                .map(Response::body)
+                .map(ResponseBody::string).subscribe(new Observer<String>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(String s) {
+                System.out.println(s);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
     }
 }

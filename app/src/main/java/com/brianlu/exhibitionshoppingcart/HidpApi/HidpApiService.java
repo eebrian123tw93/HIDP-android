@@ -91,6 +91,14 @@ public class HidpApiService {
                 .unsubscribeOn(Schedulers.io());
     }
 
+    public Observable<Response<ResponseBody>> getCartItems(@NonNull User user, boolean isObserveOnIO) {
+        String authKey = user.authKey();
+        return hidpApi.getCartItems(authKey)
+                .subscribeOn(Schedulers.io())
+                .observeOn(isObserveOnIO ? Schedulers.io() : AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io());
+    }
+
     // 創建實例
     private static class SingletonHolder {
         private static final HidpApiService INSTANCE = new HidpApiService();
