@@ -20,7 +20,7 @@ public class HidpApiService {
 
     private HidpApiService() {
         URLRetrofitBuilder urlRetrofitBuilder = new URLRetrofitBuilder();
-        retrofitArticleExcerptApi = urlRetrofitBuilder.buildretrofit("http://ec2-3-1-217-210.ap-southeast-1.compute.amazonaws.com:9900/", true);
+        retrofitArticleExcerptApi = urlRetrofitBuilder.buildretrofit("http://ec2-54-169-251-7.ap-southeast-1.compute.amazonaws.com:9900/", true);
         hidpApi = retrofitArticleExcerptApi.create(HidpApi.class);
     }
 

@@ -18,6 +18,10 @@ public class ShoppingCartRecyclerViewHolderPresenter extends BasePresenter {
         if (viewHolder instanceof ShoppingCartRecyclerViewHolderView) {
             ShoppingCartRecyclerViewHolderView viewHolderView = viewHolder;
             final CartItem cartItem = cartItems.get(position);
+            viewHolderView.onSetProductItemCount(cartItem.getProductCount() + "");
+            viewHolderView.onSetProductItemPrice(cartItem.getProductPrice());
+            viewHolderView.onSetProductItemImageView(cartItem.getProductImageUrl());
+            viewHolderView.onSetProductItemName(cartItem.getProductName());
 
         }
 
@@ -29,8 +33,7 @@ public class ShoppingCartRecyclerViewHolderPresenter extends BasePresenter {
     }
 
     public void addArticles(List<CartItem> cartItems) {
-        cartItems.addAll(cartItems);
-
+        this.cartItems.addAll(cartItems);
     }
 
     public void clear() {

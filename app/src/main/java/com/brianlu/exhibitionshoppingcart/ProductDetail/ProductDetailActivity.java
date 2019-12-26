@@ -32,6 +32,7 @@ public class ProductDetailActivity extends AppCompatActivity implements ProductD
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_detail);
 
+        productImageView = findViewById(R.id.product_imageView);
         addToCartButton = findViewById(R.id.add_to_cart_button);
         nameTextView = findViewById(R.id.product_name_textView);
         priceTextView = findViewById(R.id.product_price_textView);
@@ -58,7 +59,10 @@ public class ProductDetailActivity extends AppCompatActivity implements ProductD
     public void onShowProductDetail(ProductViewModel model) {
         Glide.with(getApplicationContext())
                 .load(model.getProductImageUrl())
+                .error(R.mipmap.box)
                 .into(productImageView);
+
+//        Log.i("TAG", model.getProductImageUrl());
 
         nameTextView.setText(model.getProductName());
         priceTextView.setText(model.getProductPrice().toString());

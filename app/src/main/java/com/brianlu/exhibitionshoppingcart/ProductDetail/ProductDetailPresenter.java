@@ -90,10 +90,11 @@ class ProductDetailPresenter extends BasePresenter {
                     @Override
                     public void onNext(String string) {
                         if (string.equals("success")) {
-                            view.onSetMessage("商品加入成功", FancyToast.INFO);
+                            view.onSetMessage("商品加入成功", FancyToast.SUCCESS);
                             view.onItemAddSuccess();
-                        } else {
+                        } else if (string.equals("no products in stock")) {
                             Log.i("TAG", string);
+                            view.onSetMessage("商品庫存不足", FancyToast.INFO);
                         }
                     }
 

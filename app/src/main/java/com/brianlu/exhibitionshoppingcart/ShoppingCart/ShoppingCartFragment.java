@@ -63,7 +63,7 @@ public class ShoppingCartFragment extends Fragment
         });
 
         recyclerView = view.findViewById(R.id.cart_product_list_recyclerView);
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
 
@@ -100,10 +100,13 @@ public class ShoppingCartFragment extends Fragment
         Optional<IntentResult> scanningResult = Optional.ofNullable(IntentIntegrator.parseActivityResult(requestCode, resultCode, intent));
         scanningResult.ifPresent(result -> {
             String productId = result.getContents();
-            Intent intentToDetail = new Intent(getActivity(), ProductDetailActivity.class);
-            intentToDetail.putExtra("productId", productId);
-            startActivity(intentToDetail);
-            Log.i("ShoppingCartFragment", productId);
+            if (!productId.isEmpty()) {
+                Intent intentToDetail = new Intent(getActivity(), ProductDetailActivity.class);
+                intentToDetail.putExtra("productId", productId);
+                startActivity(intentToDetail);
+                Log.i("ShoppingCartFragment", productId);
+            }
+
         });
 
     }

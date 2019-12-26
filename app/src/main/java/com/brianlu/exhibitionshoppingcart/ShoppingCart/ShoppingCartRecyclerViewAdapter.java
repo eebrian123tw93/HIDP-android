@@ -1,6 +1,7 @@
 package com.brianlu.exhibitionshoppingcart.ShoppingCart;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,7 @@ public class ShoppingCartRecyclerViewAdapter extends RecyclerView.Adapter<Shoppi
 
     @Override
     public int getItemCount() {
+        Log.i("TAG",viewHolderPresenter.getItemCount()+"fdsfasdf");
         return viewHolderPresenter.getItemCount();
     }
 
@@ -70,7 +72,10 @@ public class ShoppingCartRecyclerViewAdapter extends RecyclerView.Adapter<Shoppi
 
         @Override
         public void onSetProductItemImageView(String fileName) {
-            Glide.with(context).load(fileName).into(productImageView);
+            Glide.with(itemView)
+                    .load(fileName)
+                    .error(R.mipmap.box)
+                    .into(productImageView);
         }
 
         @Override
