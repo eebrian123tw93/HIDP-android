@@ -1,8 +1,5 @@
 package com.brianlu.exhibitionshoppingcart.ShoppingCart;
 
-import android.content.Intent;
-import android.view.View;
-
 import com.brianlu.exhibitionshoppingcart.Base.BasePresenter;
 import com.brianlu.exhibitionshoppingcart.model.CartItem;
 
@@ -11,16 +8,20 @@ import java.util.List;
 
 public class ShoppingCartRecyclerViewHolderPresenter extends BasePresenter {
 
-    private List<CartItem> articles;
+    private List<CartItem> cartItems;
 
     public ShoppingCartRecyclerViewHolderPresenter() {
-        articles = new ArrayList<>();
+        cartItems = new ArrayList<>();
     }
 
     public void bindData(ShoppingCartRecyclerViewAdapter.ViewHolder viewHolder, int position) {
         if (viewHolder instanceof ShoppingCartRecyclerViewHolderView) {
             ShoppingCartRecyclerViewHolderView viewHolderView = viewHolder;
-            final CartItem article = articles.get(position);
+            final CartItem cartItem = cartItems.get(position);
+            viewHolderView.onSetProductItemCount(cartItem.getProductCount() + "");
+            viewHolderView.onSetProductItemPrice(cartItem.getProductPrice());
+            viewHolderView.onSetProductItemImageView(cartItem.getProductImageUrl());
+            viewHolderView.onSetProductItemName(cartItem.getProductName());
 
         }
 
@@ -28,16 +29,15 @@ public class ShoppingCartRecyclerViewHolderPresenter extends BasePresenter {
     }
 
     public int getItemCount() {
-        return articles.size();
+        return cartItems.size();
     }
 
     public void addArticles(List<CartItem> cartItems) {
-        this.articles.addAll(cartItems);
-
+        this.cartItems.addAll(cartItems);
     }
 
     public void clear() {
-        this.articles.clear();
+        cartItems.clear();
 
     }
 

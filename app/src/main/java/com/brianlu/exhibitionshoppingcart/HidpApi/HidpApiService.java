@@ -20,7 +20,7 @@ public class HidpApiService {
 
     private HidpApiService() {
         URLRetrofitBuilder urlRetrofitBuilder = new URLRetrofitBuilder();
-        retrofitArticleExcerptApi = urlRetrofitBuilder.buildretrofit("http://ec2-3-1-217-210.ap-southeast-1.compute.amazonaws.com:9900/", true);
+        retrofitArticleExcerptApi = urlRetrofitBuilder.buildretrofit("http://ec2-54-169-251-7.ap-southeast-1.compute.amazonaws.com:9900/", true);
         hidpApi = retrofitArticleExcerptApi.create(HidpApi.class);
     }
 
@@ -41,7 +41,6 @@ public class HidpApiService {
                 .unsubscribeOn(Schedulers.io())
                 .subscribe(observer);
     }
-
 
 
     public void login(@NonNull Observer observer, @NonNull User user, boolean isObserveOnIO) {
@@ -78,6 +77,23 @@ public class HidpApiService {
         String authKey = user.authKey();
         String productId = product.getProductId();
         return hidpApi.addItemToCart(authKey, productId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(isObserveOnIO ? Schedulers.io() : AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io());
+    }
+
+    public Observable<Response<ResponseBody>> getProductInfo(@NonNull User user, @NonNull Product product, boolean isObserveOnIO) {
+        String authKey = user.authKey();
+        String productId = product.getProductId();
+        return hidpApi.getProductInfo(authKey, productId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(isObserveOnIO ? Schedulers.io() : AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io());
+    }
+
+    public Observable<Response<ResponseBody>> getCartItems(@NonNull User user, boolean isObserveOnIO) {
+        String authKey = user.authKey();
+        return hidpApi.getCartItems(authKey)
                 .subscribeOn(Schedulers.io())
                 .observeOn(isObserveOnIO ? Schedulers.io() : AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io());
