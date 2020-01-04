@@ -7,7 +7,7 @@ import android.os.Bundle;
 
 import com.brianlu.exhibitionshoppingcart.R;
 import com.brianlu.exhibitionshoppingcart.Buyer.ShoppingCart.ShoppingCartActivity;
-import com.brianlu.exhibitionshoppingcart.Seller.ProductListActivity;
+import com.brianlu.exhibitionshoppingcart.Seller.ProductList.ProductListActivity;
 
 public class IdentityChooseActivity extends AppCompatActivity {
 

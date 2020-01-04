@@ -1,21 +1,22 @@
-package com.brianlu.exhibitionshoppingcart.Seller;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.brianlu.exhibitionshoppingcart.Seller.AddProduct;
 
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.brianlu.exhibitionshoppingcart.R;
 import com.shashank.sony.fancytoastlib.FancyToast;
 
-public class ProductListActivity extends AppCompatActivity implements ProductListView {
+public class AddProductActivity extends AppCompatActivity implements AddProductView {
 
-    private ProductListPresenter presenter;
+    private AddProductPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_product_list);
-        presenter = new ProductListPresenter(this);
+        setContentView(R.layout.activity_add_product);
+
+        presenter = new AddProductPresenter(this);
     }
 
     @Override

@@ -14,7 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Seller.ProductListActivity"></activity>
+        <activity android:name=".Buyer.CheckOut.CheckOutActivity"></activity>
+        <activity android:name=".Seller.AddProduct.AddProductActivity" />
+        <activity android:name=".Seller.ProductList.ProductListActivity" />
         <activity android:name=".Identity.IdentityChooseActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,7 +25,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Buyer.ProductDetail.ProductDetailActivity" />
-        <activity android:name=".Buyer.ShoppingCart.ShoppingCartActivity"></activity>
+        <activity android:name=".Buyer.ShoppingCart.ShoppingCartActivity" />
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="fullSensor"

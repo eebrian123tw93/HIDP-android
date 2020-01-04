@@ -1,6 +1,4 @@
-package com.brianlu.exhibitionshoppingcart.Seller;
-
-import android.view.View;
+package com.brianlu.exhibitionshoppingcart.Seller.ProductList;
 
 import com.brianlu.exhibitionshoppingcart.Base.BasePresenter;
 import com.brianlu.exhibitionshoppingcart.Base.BaseView;
