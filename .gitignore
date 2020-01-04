@@ -80,3 +80,11 @@ lint/generated/
 lint/outputs/
 lint/tmp/
 # lint/reports/
+
+.idea/
+
+gradle/wrapper/gradle-wrapper.jar
+
+gradle/wrapper/gradle-wrapper.properties
+
+app/src/main/res/.DS_Store

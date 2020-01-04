@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">ExhibitionShoppingCart</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="buyer">買家</string>
+    <string name="seller">賣家</string>
+    <string name="addProduct">新增商品</string>
+</resources>
