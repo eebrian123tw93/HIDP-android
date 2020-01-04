@@ -1,4 +1,4 @@
-package com.brianlu.exhibitionshoppingcart.ShoppingCart;
+package com.brianlu.exhibitionshoppingcart.Buyer.ShoppingCart;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -26,7 +26,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        fragment.onResume();
+//        fragment.onResume();
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {

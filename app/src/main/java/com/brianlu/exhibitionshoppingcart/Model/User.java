@@ -1,4 +1,4 @@
-package com.brianlu.exhibitionshoppingcart.model;
+package com.brianlu.exhibitionshoppingcart.Model;
 
 
 import android.util.Base64;

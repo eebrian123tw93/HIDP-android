@@ -1,4 +1,4 @@
-package com.brianlu.exhibitionshoppingcart.ProductDetail;
+package com.brianlu.exhibitionshoppingcart.Buyer.ProductDetail;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +11,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.brianlu.exhibitionshoppingcart.R;
-import com.brianlu.exhibitionshoppingcart.model.ProductViewModel;
+import com.brianlu.exhibitionshoppingcart.Model.ProductViewModel;
 import com.bumptech.glide.Glide;
 import com.shashank.sony.fancytoastlib.FancyToast;
 

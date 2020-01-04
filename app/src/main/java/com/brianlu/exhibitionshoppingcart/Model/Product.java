@@ -1,9 +1,11 @@
-package com.brianlu.exhibitionshoppingcart.model;
+package com.brianlu.exhibitionshoppingcart.Model;
+
+import java.io.Serializable;
 
 import lombok.Data;
 
 @Data
-public class CartItem {
+public class Product implements Serializable {
     String productId;
     String productImageUrl;
     String productName;

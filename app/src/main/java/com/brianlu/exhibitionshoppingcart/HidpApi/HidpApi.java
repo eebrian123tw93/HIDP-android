@@ -35,6 +35,10 @@ public interface HidpApi {
     @GET("/hidp/management/getProductInfo/")
     Observable<Response<ResponseBody>> getProductInfo(@Header("Authorization") String authKey, @Query("productId") String productId);
 
+    @GET("/hidp/management/getProductsBySellerId/")
+    Observable<Response<ResponseBody>> getProductsBySellerId(@Header("Authorization") String authKey, @Query("sellerId") String sellerId);
+
+
     @GET("/hidp/user/getCartItems/")
     Observable<Response<ResponseBody>> getCartItems(@Header("Authorization") String authKey);
 

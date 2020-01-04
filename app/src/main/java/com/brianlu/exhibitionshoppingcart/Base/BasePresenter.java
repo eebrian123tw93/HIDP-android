@@ -3,13 +3,13 @@ package com.brianlu.exhibitionshoppingcart.Base;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.brianlu.exhibitionshoppingcart.model.User;
+import com.brianlu.exhibitionshoppingcart.Model.User;
 import com.google.gson.Gson;
 
 public class BasePresenter {
     public static final String dateFormat = "yyyy-MM-dd HH:mm:ss";
     private static final String USER_PROFILE = "user_profile";
-    protected static User user;
+    protected static User user =  new User("test", "test", "");
     static UserListener userListener;
     private static String PROFILE = "profile";
     protected Context context;

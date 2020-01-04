@@ -1,4 +1,4 @@
-package com.brianlu.exhibitionshoppingcart.ShoppingCart;
+package com.brianlu.exhibitionshoppingcart.Buyer.ShoppingCart;
 
 
 public interface ShoppingCartRecyclerViewHolderView {

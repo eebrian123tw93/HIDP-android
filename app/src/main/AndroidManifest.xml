@@ -14,14 +14,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ProductDetail.ProductDetailActivity"></activity>
-        <activity android:name=".ShoppingCart.ShoppingCartActivity">
+        <activity android:name=".Seller.ProductListActivity"></activity>
+        <activity android:name=".Identity.IdentityChooseActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Buyer.ProductDetail.ProductDetailActivity" />
+        <activity android:name=".Buyer.ShoppingCart.ShoppingCartActivity"></activity>
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="fullSensor"

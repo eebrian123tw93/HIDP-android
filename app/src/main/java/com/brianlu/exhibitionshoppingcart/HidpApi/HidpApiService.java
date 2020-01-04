@@ -1,8 +1,24 @@
 package com.brianlu.exhibitionshoppingcart.HidpApi;
 
-import com.brianlu.exhibitionshoppingcart.model.Product;
-import com.brianlu.exhibitionshoppingcart.model.User;
+import android.util.Base64;
+
+import com.brianlu.exhibitionshoppingcart.Model.CartItem;
+import com.brianlu.exhibitionshoppingcart.Model.Product;
+import com.brianlu.exhibitionshoppingcart.Model.ProductViewModel;
+import com.brianlu.exhibitionshoppingcart.Model.User;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
@@ -82,26 +98,68 @@ public class HidpApiService {
                 .unsubscribeOn(Schedulers.io());
     }
 
-    public Observable<Response<ResponseBody>> getProductInfo(@NonNull User user, @NonNull Product product, boolean isObserveOnIO) {
+    public Observable<ProductViewModel> getProductInfo(@NonNull User user, @NonNull Product product, boolean isObserveOnIO) {
         String authKey = user.authKey();
         String productId = product.getProductId();
         return hidpApi.getProductInfo(authKey, productId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(isObserveOnIO ? Schedulers.io() : AndroidSchedulers.mainThread())
-                .unsubscribeOn(Schedulers.io());
+                .unsubscribeOn(Schedulers.io())
+                .filter(Response::isSuccessful)
+                .map(Response::body)
+                .map(ResponseBody::string)
+                .doOnNext(System.out::println)
+                .map(s -> new GsonBuilder().create().fromJson(s, ProductViewModel.class));
     }
 
-    public Observable<Response<ResponseBody>> getCartItems(@NonNull User user, boolean isObserveOnIO) {
+    public Observable<List<ProductViewModel>> getProductsBySellerId(@NonNull User user, boolean isObserveOnIO) {
+        String authKey = user.authKey();
+        return hidpApi.getProductsBySellerId(authKey, user.getUserId())
+                .subscribeOn(Schedulers.io())
+                .observeOn(isObserveOnIO ? Schedulers.io() : AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .filter(Response::isSuccessful)
+                .map(Response::body)
+                .map(ResponseBody::string)
+                .doOnNext(System.out::println)
+                .map(string -> {
+                    Type listType = new TypeToken<List<ProductViewModel>>() {
+                    }.getType();
+                    return  new GsonBuilder().registerTypeHierarchyAdapter(byte[].class,
+                            new ByteArrayToBase64TypeAdapter()).setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create().fromJson(string, listType);
+
+                });
+    }
+
+
+    public Observable<List<CartItem>> getCartItems(@NonNull User user, boolean isObserveOnIO) {
         String authKey = user.authKey();
         return hidpApi.getCartItems(authKey)
                 .subscribeOn(Schedulers.io())
                 .observeOn(isObserveOnIO ? Schedulers.io() : AndroidSchedulers.mainThread())
-                .unsubscribeOn(Schedulers.io());
+                .unsubscribeOn(Schedulers.io()).filter(Response::isSuccessful)
+                .map(Response::body)
+                .map(ResponseBody::string)
+                .map(string -> {
+                    Type listType = new TypeToken<List<CartItem>>() {
+                    }.getType();
+                    return new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create().<List<CartItem>>fromJson(string, listType);
+                });
     }
 
     // 創建實例
     private static class SingletonHolder {
         private static final HidpApiService INSTANCE = new HidpApiService();
+    }
+
+    private static class ByteArrayToBase64TypeAdapter implements JsonSerializer<byte[]>, JsonDeserializer<byte[]> {
+        public byte[] deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            return Base64.decode(json.getAsString(), Base64.NO_WRAP);
+        }
+
+        public JsonElement serialize(byte[] src, Type typeOfSrc, JsonSerializationContext context) {
+            return new JsonPrimitive(Base64.encodeToString(src, Base64.NO_WRAP));
+        }
     }
 }
 

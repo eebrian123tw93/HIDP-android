@@ -1,4 +1,4 @@
-package com.brianlu.exhibitionshoppingcart.model;
+package com.brianlu.exhibitionshoppingcart.Model;
 
 import lombok.Data;
 
@@ -9,5 +9,9 @@ public class ProductViewModel {
     private Double productPrice;
     private Integer productCount;
     private String productImageUrl;
+    private String productId;
+    private String productDesc;
+    private byte [] productQrCode;
+
 }
 

@@ -1,14 +1,13 @@
-package com.brianlu.exhibitionshoppingcart.ProductDetail;
+package com.brianlu.exhibitionshoppingcart.Buyer.ProductDetail;
 
 import android.util.Log;
 
 import com.brianlu.exhibitionshoppingcart.Base.BasePresenter;
 import com.brianlu.exhibitionshoppingcart.Base.BaseView;
 import com.brianlu.exhibitionshoppingcart.HidpApi.HidpApiService;
-import com.brianlu.exhibitionshoppingcart.model.Product;
-import com.brianlu.exhibitionshoppingcart.model.ProductViewModel;
-import com.brianlu.exhibitionshoppingcart.model.User;
-import com.google.gson.GsonBuilder;
+import com.brianlu.exhibitionshoppingcart.Model.Product;
+import com.brianlu.exhibitionshoppingcart.Model.ProductViewModel;
+import com.brianlu.exhibitionshoppingcart.Model.User;
 import com.shashank.sony.fancytoastlib.FancyToast;
 
 import io.reactivex.Observer;
@@ -37,14 +36,8 @@ class ProductDetailPresenter extends BasePresenter {
         User user = new User();
         user.setUserId("test");
         user.setPassword("test");
-        HidpApiService.getInstance().getProductInfo(user, product, false)
-                .filter(Response::isSuccessful)
-                .map(Response::body)
-                .map(ResponseBody::string)
-                .map(s -> {
-                    ProductViewModel detail = new GsonBuilder().create().fromJson(s, ProductViewModel.class);
-                    return detail;
-                })
+        HidpApiService.getInstance()
+                .getProductInfo(user, product, false)
                 .subscribe(new Observer<ProductViewModel>() {
                     @Override
                     public void onSubscribe(Disposable d) {

@@ -1,4 +1,4 @@
-package com.brianlu.exhibitionshoppingcart.ShoppingCart;
+package com.brianlu.exhibitionshoppingcart.Buyer.ShoppingCart;
 
 import android.content.Context;
 import android.util.Log;
@@ -11,7 +11,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.brianlu.exhibitionshoppingcart.R;
-import com.brianlu.exhibitionshoppingcart.model.CartItem;
+import com.brianlu.exhibitionshoppingcart.Model.CartItem;
 import com.bumptech.glide.Glide;
 
 import java.util.List;
@@ -45,7 +45,7 @@ public class ShoppingCartRecyclerViewAdapter extends RecyclerView.Adapter<Shoppi
         viewHolderPresenter.bindData(holder, position);
     }
 
-    public void addArticles(List<CartItem> articles) {
+    public void addCartItems(List<CartItem> articles) {
         viewHolderPresenter.addArticles(articles);
         notifyDataSetChanged();
     }
@@ -72,6 +72,7 @@ public class ShoppingCartRecyclerViewAdapter extends RecyclerView.Adapter<Shoppi
 
         @Override
         public void onSetProductItemImageView(String fileName) {
+            System.out.println("file"+fileName);
             Glide.with(itemView)
                     .load(fileName)
                     .error(R.mipmap.box)
