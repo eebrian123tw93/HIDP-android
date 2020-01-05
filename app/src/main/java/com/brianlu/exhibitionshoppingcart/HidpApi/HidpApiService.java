@@ -125,7 +125,7 @@ public class HidpApiService {
                 .map(string -> {
                     Type listType = new TypeToken<List<ProductViewModel>>() {
                     }.getType();
-                    return  new GsonBuilder().registerTypeHierarchyAdapter(byte[].class,
+                    return new GsonBuilder().registerTypeHierarchyAdapter(byte[].class,
                             new ByteArrayToBase64TypeAdapter()).setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create().fromJson(string, listType);
 
                 });
@@ -137,7 +137,8 @@ public class HidpApiService {
         return hidpApi.getCartItems(authKey)
                 .subscribeOn(Schedulers.io())
                 .observeOn(isObserveOnIO ? Schedulers.io() : AndroidSchedulers.mainThread())
-                .unsubscribeOn(Schedulers.io()).filter(Response::isSuccessful)
+                .unsubscribeOn(Schedulers.io())
+                .filter(Response::isSuccessful)
                 .map(Response::body)
                 .map(ResponseBody::string)
                 .map(string -> {
@@ -145,6 +146,19 @@ public class HidpApiService {
                     }.getType();
                     return new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create().<List<CartItem>>fromJson(string, listType);
                 });
+    }
+
+    public Observable<Boolean> uploadProduct(@NonNull User user, @NonNull ProductViewModel model, boolean isObserveOnIO) {
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+        String json = gson.toJson(model);
+        System.out.println(json);
+        return hidpApi.uploadProduct(user.authKey(), json)
+                .subscribeOn(Schedulers.io())
+                .observeOn(isObserveOnIO ? Schedulers.io() : AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .doOnNext(response -> System.out.println(response.isSuccessful()))
+                .filter(Response::isSuccessful)
+                .map(response -> true);
     }
 
     // 創建實例

@@ -45,7 +45,9 @@ public class ShoppingCartFragment extends Fragment
         checkoutButton.setOnClickListener(this);
 
         refreshLayout = view.findViewById(R.id.refreshLayout);
-        refreshLayout.setAutoLoadMore(true);
+        refreshLayout.setAutoLoadMore(false);
+        refreshLayout.setEnableRefresh(false);
+        refreshLayout.setEnableLoadmore(false);
         refreshLayout.setOnRefreshListener(new RefreshListenerAdapter() {
 
             @Override
