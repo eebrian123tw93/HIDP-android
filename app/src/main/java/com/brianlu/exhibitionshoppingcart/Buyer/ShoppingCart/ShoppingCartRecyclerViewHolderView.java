@@ -1,6 +1,8 @@
 package com.brianlu.exhibitionshoppingcart.Buyer.ShoppingCart;
 
 
+import android.view.View;
+
 public interface ShoppingCartRecyclerViewHolderView {
 
     void onSetProductItemImageView(String fileName);
@@ -10,4 +12,6 @@ public interface ShoppingCartRecyclerViewHolderView {
     void onSetProductItemPrice(String price);
 
     void onSetProductItemCount(String count);
+
+    void onSetCardViewClickListener(View.OnClickListener listener);
 }

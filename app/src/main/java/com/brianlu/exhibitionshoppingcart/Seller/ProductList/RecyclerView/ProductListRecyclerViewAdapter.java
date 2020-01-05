@@ -1,53 +1,52 @@
-package com.brianlu.exhibitionshoppingcart.Buyer.ShoppingCart;
+package com.brianlu.exhibitionshoppingcart.Seller.ProductList.RecyclerView;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.cardview.widget.CardView;
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.brianlu.exhibitionshoppingcart.Model.CartItem;
+import com.brianlu.exhibitionshoppingcart.Model.ProductViewModel;
 import com.brianlu.exhibitionshoppingcart.R;
 import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-public class ShoppingCartRecyclerViewAdapter extends RecyclerView.Adapter<ShoppingCartRecyclerViewAdapter.ViewHolder> {
+public class ProductListRecyclerViewAdapter extends RecyclerView.Adapter<ProductListRecyclerViewAdapter.ViewHolder> {
 
     private Context context;
 
-    private ShoppingCartRecyclerViewHolderPresenter viewHolderPresenter;
+    private ProductListRecyclerViewHolderPresenter viewHolderPresenter;
 
-    public ShoppingCartRecyclerViewAdapter(Context context) {
+    public ProductListRecyclerViewAdapter(Context context) {
         this.context = context;
-        this.viewHolderPresenter = new ShoppingCartRecyclerViewHolderPresenter();
+        this.viewHolderPresenter = new ProductListRecyclerViewHolderPresenter();
     }
 
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_cart, parent, false);
+                .inflate(R.layout.item_product, parent, false);
         return new ViewHolder(v);
     }
 
     @Override
     public int getItemCount() {
-        Log.i("TAG", viewHolderPresenter.getItemCount() + "fdsfasdf");
         return viewHolderPresenter.getItemCount();
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         viewHolderPresenter.bindData(holder, position);
     }
 
-    public void addCartItems(List<CartItem> articles) {
-        viewHolderPresenter.addArticles(articles);
+    public void addProductList(List<ProductViewModel> models) {
+        viewHolderPresenter.addArticles(models);
         notifyDataSetChanged();
     }
 
@@ -56,13 +55,13 @@ public class ShoppingCartRecyclerViewAdapter extends RecyclerView.Adapter<Shoppi
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements ShoppingCartRecyclerViewHolderView {
+    public class ViewHolder extends RecyclerView.ViewHolder implements ProductListRecyclerViewHolderView {
 
         private ImageView productImageView;
+        private ImageView qrcodeImageView;
         private TextView nameTextView;
         private TextView priceTextView;
         private TextView countTextView;
-        private CardView cardView;
 
         ViewHolder(View v) {
             super(v);
@@ -70,17 +69,25 @@ public class ShoppingCartRecyclerViewAdapter extends RecyclerView.Adapter<Shoppi
             nameTextView = v.findViewById(R.id.product_name_textView);
             priceTextView = v.findViewById(R.id.price_textView);
             countTextView = v.findViewById(R.id.count_textView);
-            cardView = v.findViewById(R.id.card_view);
+            qrcodeImageView = v.findViewById(R.id.product_qrcode);
         }
 
         @Override
         public void onSetProductItemImageView(String fileName) {
-            System.out.println("file" + fileName);
+            System.out.println("file"+fileName);
             Glide.with(itemView)
                     .load(fileName)
                     .centerCrop()
                     .error(R.mipmap.box)
                     .into(productImageView);
+        }
+
+        @Override
+        public void onSetProductQrcodeImageView(byte[] imageByteArray) {
+            Glide.with(itemView)
+                    .load(imageByteArray)
+                    .error(R.mipmap.qr_code)
+                    .into(qrcodeImageView);
         }
 
         @Override
@@ -96,11 +103,6 @@ public class ShoppingCartRecyclerViewAdapter extends RecyclerView.Adapter<Shoppi
         @Override
         public void onSetProductItemCount(String count) {
             countTextView.setText(count);
-        }
-
-        @Override
-        public void onSetCardViewClickListener(View.OnClickListener listener) {
-            cardView.setOnClickListener(listener);
         }
     }
 

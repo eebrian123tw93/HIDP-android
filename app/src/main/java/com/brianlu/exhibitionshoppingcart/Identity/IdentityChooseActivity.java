@@ -1,12 +1,12 @@
 package com.brianlu.exhibitionshoppingcart.Identity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.brianlu.exhibitionshoppingcart.R;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.brianlu.exhibitionshoppingcart.Buyer.ShoppingCart.ShoppingCartActivity;
+import com.brianlu.exhibitionshoppingcart.R;
 import com.brianlu.exhibitionshoppingcart.Seller.ProductList.ProductListActivity;
 
 public class IdentityChooseActivity extends AppCompatActivity {

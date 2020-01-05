@@ -32,9 +32,9 @@ public class BasePresenter {
         String profileJson = sharedPreferences.getString(USER_PROFILE, "");
         User user = new Gson().fromJson(profileJson, User.class);
         if (user == null || user.getUserId() == null || user.getPassword() == null || user.getUserId().isEmpty() || user.getPassword().isEmpty()) {
-            this.user = null;
+            BasePresenter.user = null;
         } else {
-            this.user = new User(user.getUserId(), user.getPassword(), user.getEmail());
+            BasePresenter.user = new User(user.getUserId(), user.getPassword(), user.getEmail());
         }
     }
 

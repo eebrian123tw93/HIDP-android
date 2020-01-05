@@ -1,7 +1,5 @@
 package com.brianlu.exhibitionshoppingcart.HidpApi;
 
-import com.google.gson.JsonArray;
-
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
@@ -32,6 +30,10 @@ public interface HidpApi {
     @POST("/hidp/user/addItemToCart/")
     Observable<Response<ResponseBody>> addItemToCart(@Header("Authorization") String authKey, @Body String productId);
 
+    @Headers("Content-Type:application/x-www-form-urlencoded")
+    @POST("/hidp/user/editCartItem/")
+    Observable<Response<ResponseBody>> editCartItem(@Header("Authorization") String authKey, @Query("productId") String productId, @Query("amount") int amount);
+
     @GET("/hidp/management/getProductInfo/")
     Observable<Response<ResponseBody>> getProductInfo(@Header("Authorization") String authKey, @Query("productId") String productId);
 
@@ -41,6 +43,10 @@ public interface HidpApi {
 
     @GET("/hidp/user/getCartItems/")
     Observable<Response<ResponseBody>> getCartItems(@Header("Authorization") String authKey);
+
+    @Headers("Content-Type:application/json")
+    @POST("/hidp/management/uploadProduct/")
+    Observable<Response<ResponseBody>> uploadProduct(@Header("Authorization") String authKey, @Body String s);
 
 
 }

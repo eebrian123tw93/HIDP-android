@@ -1,8 +1,10 @@
 package com.brianlu.exhibitionshoppingcart.Model;
 
 import com.jakewharton.rxrelay2.BehaviorRelay;
+
 import java.io.Serializable;
 import java.util.Date;
+
 import lombok.Data;
 
 @Data

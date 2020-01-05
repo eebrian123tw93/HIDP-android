@@ -45,7 +45,9 @@ public class ShoppingCartFragment extends Fragment
         checkoutButton.setOnClickListener(this);
 
         refreshLayout = view.findViewById(R.id.refreshLayout);
-        refreshLayout.setAutoLoadMore(true);
+        refreshLayout.setAutoLoadMore(false);
+        refreshLayout.setEnableRefresh(false);
+        refreshLayout.setEnableLoadmore(false);
         refreshLayout.setOnRefreshListener(new RefreshListenerAdapter() {
 
             @Override
@@ -103,6 +105,8 @@ public class ShoppingCartFragment extends Fragment
             if (!productId.isEmpty()) {
                 Intent intentToDetail = new Intent(getActivity(), ProductDetailActivity.class);
                 intentToDetail.putExtra("productId", productId);
+                intentToDetail.putExtra("isScan", false);
+                intentToDetail.putExtra("amount", 0);
                 startActivity(intentToDetail);
                 Log.i("ShoppingCartFragment", productId);
             }

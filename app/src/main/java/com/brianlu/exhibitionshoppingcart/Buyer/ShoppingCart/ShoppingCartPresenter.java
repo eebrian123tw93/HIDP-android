@@ -62,7 +62,7 @@ class ShoppingCartPresenter extends BasePresenter {
                         total.subscribe(aDouble -> {
                             view.setCheckoutButtonText("總計" + ((int)(double)aDouble));
                         });
-                        HidpApiService.getInstance().getProductsBySellerId(user,false).subscribe();
+
 
                     }
 

@@ -5,6 +5,7 @@ import android.util.Log;
 import com.brianlu.exhibitionshoppingcart.Base.BasePresenter;
 import com.brianlu.exhibitionshoppingcart.Base.BaseView;
 import com.brianlu.exhibitionshoppingcart.HidpApi.HidpApiService;
+import com.brianlu.exhibitionshoppingcart.Model.CartItem;
 import com.brianlu.exhibitionshoppingcart.Model.Product;
 import com.brianlu.exhibitionshoppingcart.Model.ProductViewModel;
 import com.brianlu.exhibitionshoppingcart.Model.User;
@@ -62,39 +63,33 @@ class ProductDetailPresenter extends BasePresenter {
                 });
     }
 
-    void addItemToCart() {
+    void addItemToCart(int amount) {
         String productId = product.getProductId();
         view.onSetMessage(productId, FancyToast.INFO);
-        Product product = new Product();
-        product.setProductId(productId);
-        User user = new User();
-        user.setUserId("test");
-        user.setPassword("test");
-        HidpApiService.getInstance().addItemToCart(user, product, false)
-                .filter(Response::isSuccessful)
-                .map(Response::body)
-                .map(ResponseBody::string)
-                .subscribe(new Observer<String>() {
+        CartItem cartItem = new CartItem();
+        cartItem.setProductId(productId);
+        cartItem.setAmount(amount);
+        HidpApiService.getInstance().editCartItem(user, cartItem, false)
+                .subscribe(new Observer<Response<ResponseBody>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(String string) {
-                        if (string.equals("success")) {
+                    public void onNext(Response<ResponseBody> response) {
+                        System.out.println(response.code());
+                        if (response.code() == 200) {
                             view.onSetMessage("商品加入成功", FancyToast.SUCCESS);
                             view.onItemAddSuccess();
-                        } else if (string.equals("no products in stock")) {
-                            Log.i("TAG", string);
-                            view.onSetMessage("商品庫存不足", FancyToast.INFO);
                         }
+
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        view.onSetMessage(e.getMessage(), FancyToast.ERROR);
                         e.printStackTrace();
+                        view.onSetMessage("error", FancyToast.ERROR);
                     }
 
                     @Override

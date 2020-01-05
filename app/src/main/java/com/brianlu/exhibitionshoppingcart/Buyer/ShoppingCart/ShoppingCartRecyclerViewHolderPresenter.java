@@ -1,6 +1,9 @@
 package com.brianlu.exhibitionshoppingcart.Buyer.ShoppingCart;
 
+import android.content.Intent;
+
 import com.brianlu.exhibitionshoppingcart.Base.BasePresenter;
+import com.brianlu.exhibitionshoppingcart.Buyer.ProductDetail.ProductDetailActivity;
 import com.brianlu.exhibitionshoppingcart.HidpApi.HidpApiService;
 import com.brianlu.exhibitionshoppingcart.Model.CartItem;
 import com.brianlu.exhibitionshoppingcart.Model.Product;
@@ -11,6 +14,8 @@ import java.util.List;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
+
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 public class ShoppingCartRecyclerViewHolderPresenter extends BasePresenter {
 
@@ -26,7 +31,7 @@ public class ShoppingCartRecyclerViewHolderPresenter extends BasePresenter {
             final CartItem cartItem = cartItems.get(position);
             Product product = new Product();
             product.setProductId(cartItem.getProductId());
-            HidpApiService.getInstance().getProductInfo(user,product, false ).subscribe(new Observer<ProductViewModel>() {
+            HidpApiService.getInstance().getProductInfo(user, product, false).subscribe(new Observer<ProductViewModel>() {
                 @Override
                 public void onSubscribe(Disposable d) {
 
@@ -34,10 +39,18 @@ public class ShoppingCartRecyclerViewHolderPresenter extends BasePresenter {
 
                 @Override
                 public void onNext(ProductViewModel productViewModel) {
-                    viewHolderView.onSetProductItemPrice(productViewModel.getProductPrice()+"");
+                    viewHolderView.onSetProductItemPrice(productViewModel.getProductPrice() + "");
                     viewHolderView.onSetProductItemImageView(productViewModel.getProductImageUrl());
                     viewHolderView.onSetProductItemName(productViewModel.getProductName());
-                    cartItem.getPriceTotal().accept(cartItem.getAmount()* productViewModel.getProductPrice());
+                    cartItem.getPriceTotal().accept(cartItem.getAmount() * productViewModel.getProductPrice());
+                    viewHolder.onSetCardViewClickListener(view -> {
+                        Intent intent = new Intent(context, ProductDetailActivity.class);
+                        intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra("productId", cartItem.getProductId());
+                        intent.putExtra("isScan", true);
+                        intent.putExtra("amount", cartItem.getAmount());
+                        context.startActivity(intent);
+                    });
                 }
 
                 @Override
