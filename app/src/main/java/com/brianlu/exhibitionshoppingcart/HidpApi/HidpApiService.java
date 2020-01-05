@@ -98,6 +98,19 @@ public class HidpApiService {
                 .unsubscribeOn(Schedulers.io());
     }
 
+    public Observable<Response<ResponseBody>> editCartItem(@NonNull User user, @NonNull CartItem cartItem, boolean isObserveOnIO) {
+        String authKey = user.authKey();
+        String productId = cartItem.getProductId();
+        int amount = cartItem.getAmount();
+        String query = "productId=" + productId + "&amount=" + amount;
+        return hidpApi.editCartItem(authKey, productId, amount)
+                .subscribeOn(Schedulers.io())
+                .observeOn(isObserveOnIO ? Schedulers.io() : AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .doOnNext(response -> System.out.println(response.isSuccessful()));
+//                .filter(Response::isSuccessful);
+    }
+
     public Observable<ProductViewModel> getProductInfo(@NonNull User user, @NonNull Product product, boolean isObserveOnIO) {
         String authKey = user.authKey();
         String productId = product.getProductId();

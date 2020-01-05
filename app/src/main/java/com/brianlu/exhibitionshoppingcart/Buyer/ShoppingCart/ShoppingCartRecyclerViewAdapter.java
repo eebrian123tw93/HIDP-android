@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.brianlu.exhibitionshoppingcart.Model.CartItem;
@@ -36,7 +37,7 @@ public class ShoppingCartRecyclerViewAdapter extends RecyclerView.Adapter<Shoppi
 
     @Override
     public int getItemCount() {
-        Log.i("TAG",viewHolderPresenter.getItemCount()+"fdsfasdf");
+        Log.i("TAG", viewHolderPresenter.getItemCount() + "fdsfasdf");
         return viewHolderPresenter.getItemCount();
     }
 
@@ -61,6 +62,7 @@ public class ShoppingCartRecyclerViewAdapter extends RecyclerView.Adapter<Shoppi
         private TextView nameTextView;
         private TextView priceTextView;
         private TextView countTextView;
+        private CardView cardView;
 
         ViewHolder(View v) {
             super(v);
@@ -68,11 +70,12 @@ public class ShoppingCartRecyclerViewAdapter extends RecyclerView.Adapter<Shoppi
             nameTextView = v.findViewById(R.id.product_name_textView);
             priceTextView = v.findViewById(R.id.price_textView);
             countTextView = v.findViewById(R.id.count_textView);
+            cardView = v.findViewById(R.id.card_view);
         }
 
         @Override
         public void onSetProductItemImageView(String fileName) {
-            System.out.println("file"+fileName);
+            System.out.println("file" + fileName);
             Glide.with(itemView)
                     .load(fileName)
                     .centerCrop()
@@ -93,6 +96,11 @@ public class ShoppingCartRecyclerViewAdapter extends RecyclerView.Adapter<Shoppi
         @Override
         public void onSetProductItemCount(String count) {
             countTextView.setText(count);
+        }
+
+        @Override
+        public void onSetCardViewClickListener(View.OnClickListener listener) {
+            cardView.setOnClickListener(listener);
         }
     }
 

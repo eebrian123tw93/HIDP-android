@@ -30,6 +30,10 @@ public interface HidpApi {
     @POST("/hidp/user/addItemToCart/")
     Observable<Response<ResponseBody>> addItemToCart(@Header("Authorization") String authKey, @Body String productId);
 
+    @Headers("Content-Type:application/x-www-form-urlencoded")
+    @POST("/hidp/user/editCartItem/")
+    Observable<Response<ResponseBody>> editCartItem(@Header("Authorization") String authKey, @Query("productId") String productId, @Query("amount") int amount);
+
     @GET("/hidp/management/getProductInfo/")
     Observable<Response<ResponseBody>> getProductInfo(@Header("Authorization") String authKey, @Query("productId") String productId);
 
