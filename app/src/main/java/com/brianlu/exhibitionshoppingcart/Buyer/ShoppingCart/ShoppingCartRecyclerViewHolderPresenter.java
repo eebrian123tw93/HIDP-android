@@ -47,7 +47,7 @@ public class ShoppingCartRecyclerViewHolderPresenter extends BasePresenter {
                         Intent intent = new Intent(context, ProductDetailActivity.class);
                         intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
                         intent.putExtra("productId", cartItem.getProductId());
-                        intent.putExtra("isScan", true);
+                        intent.putExtra("isScan", false);
                         intent.putExtra("amount", cartItem.getAmount());
                         context.startActivity(intent);
                     });

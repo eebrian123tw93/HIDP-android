@@ -11,6 +11,7 @@ import com.brianlu.exhibitionshoppingcart.Model.CartItem;
 import com.jakewharton.rxrelay2.BehaviorRelay;
 
 import java.util.List;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import io.reactivex.Observer;
@@ -41,7 +42,7 @@ class ShoppingCartPresenter extends BasePresenter {
     void getCartItems() {
         adapter.clear();
         HidpApiService.getInstance().getCartItems(user, false)
-
+                .map(cartItems -> cartItems.stream().filter(cartItem -> cartItem.getAmount() != 0).collect(Collectors.toList()))
                 .subscribe(new Observer<List<CartItem>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
@@ -60,7 +61,7 @@ class ShoppingCartPresenter extends BasePresenter {
                             });
                         });
                         total.subscribe(aDouble -> {
-                            view.setCheckoutButtonText("總計" + ((int)(double)aDouble));
+                            view.setCheckoutButtonText("總計" + ((int) (double) aDouble));
                         });
 
 
@@ -77,7 +78,6 @@ class ShoppingCartPresenter extends BasePresenter {
                     }
                 });
     }
-
 
 
 }

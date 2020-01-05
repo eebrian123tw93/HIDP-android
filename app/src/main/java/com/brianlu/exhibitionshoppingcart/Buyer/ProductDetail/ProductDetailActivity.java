@@ -77,6 +77,10 @@ public class ProductDetailActivity extends AppCompatActivity implements ProductD
         isScan = intent.getBooleanExtra("isScan", false);
         amount = intent.getIntExtra("amount", 0);
 
+        if (!isScan) {
+            addToCartButton.setText("更新");
+        }
+
         Optional<String> productIdOptional = Optional.ofNullable(intent.getStringExtra("productId"));
         productIdOptional.ifPresent(productId -> {
             Log.i("TAG", productId);
@@ -123,7 +127,7 @@ public class ProductDetailActivity extends AppCompatActivity implements ProductD
         priceTextView.setText(model.getProductPrice().toString() + "元");
         countTextView.setText(0 + "個");
         seekBar.setMin(0);
-        seekBar.setMax(model.getProductCount());
+        seekBar.setMax(model.getProductCount() + amount);
         seekBar.setProgress(amount);
     }
 
@@ -132,7 +136,7 @@ public class ProductDetailActivity extends AppCompatActivity implements ProductD
         switch (view.getId()) {
             case R.id.add_to_cart_button:
                 int progress = seekBar.getProgress();
-                if (progress != 0) {
+                if (progress != 0 || !isScan) {
                     present.addItemToCart(progress);
                 }
                 break;
