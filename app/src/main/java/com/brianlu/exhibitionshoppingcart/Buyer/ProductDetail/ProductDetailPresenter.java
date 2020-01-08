@@ -1,7 +1,5 @@
 package com.brianlu.exhibitionshoppingcart.Buyer.ProductDetail;
 
-import android.util.Log;
-
 import com.brianlu.exhibitionshoppingcart.Base.BasePresenter;
 import com.brianlu.exhibitionshoppingcart.Base.BaseView;
 import com.brianlu.exhibitionshoppingcart.HidpApi.HidpApiService;
@@ -25,13 +23,14 @@ interface ProductDetailView extends BaseView {
 class ProductDetailPresenter extends BasePresenter {
     private ProductDetailView view;
     private Product product;
+    private boolean isScan;
 
     ProductDetailPresenter(ProductDetailView view) {
         this.view = view;
     }
 
     void getProductInfo(String productId) {
-        view.onSetMessage(productId, FancyToast.INFO);
+
         product = new Product();
         product.setProductId(productId);
         User user = new User();
@@ -65,7 +64,6 @@ class ProductDetailPresenter extends BasePresenter {
 
     void addItemToCart(int amount) {
         String productId = product.getProductId();
-        view.onSetMessage(productId, FancyToast.INFO);
         CartItem cartItem = new CartItem();
         cartItem.setProductId(productId);
         cartItem.setAmount(amount);
@@ -80,7 +78,12 @@ class ProductDetailPresenter extends BasePresenter {
                     public void onNext(Response<ResponseBody> response) {
                         System.out.println(response.code());
                         if (response.code() == 200) {
-                            view.onSetMessage("商品加入成功", FancyToast.SUCCESS);
+                            if (isScan) {
+                                view.onSetMessage("商品加入成功", FancyToast.SUCCESS);
+                            } else {
+                                view.onSetMessage("商品更新成功", FancyToast.SUCCESS);
+                            }
+
                             view.onItemAddSuccess();
                         }
 
@@ -97,5 +100,9 @@ class ProductDetailPresenter extends BasePresenter {
 
                     }
                 });
+    }
+
+    void setScan(boolean scan) {
+        isScan = scan;
     }
 }

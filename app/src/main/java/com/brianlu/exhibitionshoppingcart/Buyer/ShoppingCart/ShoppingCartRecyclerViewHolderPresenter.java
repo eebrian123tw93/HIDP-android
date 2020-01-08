@@ -39,7 +39,7 @@ public class ShoppingCartRecyclerViewHolderPresenter extends BasePresenter {
 
                 @Override
                 public void onNext(ProductViewModel productViewModel) {
-                    viewHolderView.onSetProductItemPrice(productViewModel.getProductPrice() + "");
+                    viewHolderView.onSetProductItemPrice(productViewModel.getProductPrice() + "元");
                     viewHolderView.onSetProductItemImageView(productViewModel.getProductImageUrl());
                     viewHolderView.onSetProductItemName(productViewModel.getProductName());
                     cartItem.getPriceTotal().accept(cartItem.getAmount() * productViewModel.getProductPrice());
@@ -71,7 +71,7 @@ public class ShoppingCartRecyclerViewHolderPresenter extends BasePresenter {
 //                viewHolderView.onSetProductItemImageView(product.getProductImageUrl());
 //                viewHolderView.onSetProductItemName(product.getProductName());
 //            });
-            viewHolderView.onSetProductItemCount(cartItem.getAmount() + "");
+            viewHolderView.onSetProductItemCount(cartItem.getAmount() + "個");
 
 
         }

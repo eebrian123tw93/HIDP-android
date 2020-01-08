@@ -34,7 +34,7 @@ class ShoppingCartPresenter extends BasePresenter {
     ShoppingCartPresenter(ShoppingCartView view) {
         this.view = view;
         view.setScanButtonText("掃描商品");
-        view.setCheckoutButtonText("總計 0");
+        view.setCheckoutButtonText("總計 0元");
         adapter = new ShoppingCartRecyclerViewAdapter(context);
         view.onSetArticleListRecyclerAdapter(adapter);
     }
@@ -61,7 +61,7 @@ class ShoppingCartPresenter extends BasePresenter {
                             });
                         });
                         total.subscribe(aDouble -> {
-                            view.setCheckoutButtonText("總計" + ((int) (double) aDouble));
+                            view.setCheckoutButtonText("總計" + ((int) (double) aDouble)+" 元");
                         });
 
 

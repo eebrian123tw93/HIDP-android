@@ -79,6 +79,7 @@ public class ProductDetailActivity extends AppCompatActivity implements ProductD
 
         if (!isScan) {
             addToCartButton.setText("更新");
+            present.setScan(isScan);
         }
 
         Optional<String> productIdOptional = Optional.ofNullable(intent.getStringExtra("productId"));
